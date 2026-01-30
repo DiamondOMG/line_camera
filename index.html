@@ -4,18 +4,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
+  <button id="takePhoto">ถ่ายรูป</button>
+  <img id="photo" style="max-width: 100%; display: none;" />
+  <input type="file" id="fileInput" accept="image/*" capture="environment" style="display: none;" />
 
-<button id="openCam">เปิดกล้อง</button>
-<video id="video" autoplay playsinline></video>
+  <script>
+    document.getElementById("takePhoto").onclick = () => {
+      document.getElementById("fileInput").click();
+    };
 
-<script>
-document.getElementById("openCam").onclick = async () => {
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: { facingMode: "environment" }
-  });
-  document.getElementById("video").srcObject = stream;
-};
-</script>
-
+    document.getElementById("fileInput").onchange = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = document.getElementById("photo");
+          img.src = e.target.result;
+          img.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  </script>
 </body>
 </html>
