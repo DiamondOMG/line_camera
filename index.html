@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+
+<button id="openCam">เปิดกล้อง</button>
+<video id="video" autoplay playsinline></video>
+
+<script>
+document.getElementById("openCam").onclick = async () => {
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: { facingMode: "environment" }
+  });
+  document.getElementById("video").srcObject = stream;
+};
+</script>
+
+</body>
+</html>
