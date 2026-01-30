@@ -4,17 +4,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
-  <button id="takePhoto">ถ่ายรูป</button>
+  <button id="takePhoto">ถ่ายรูปด้วยกล้อง</button>
+  <button id="selectPhoto">เลือกรูปจากแกลเลอรี่</button>
   <img id="photo" style="max-width: 100%; display: none;" />
-  <input type="file" id="fileInput" accept="image/*" capture="environment" style="display: none;" />
+  
+  <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;" />
+  <input type="file" id="galleryInput" accept="image/*" style="display: none;" />
 
   <script>
+    // สำหรับถ่ายรูปด้วยกล้อง
     document.getElementById("takePhoto").onclick = () => {
-      document.getElementById("fileInput").click();
+      document.getElementById("cameraInput").click();
     };
 
-    document.getElementById("fileInput").onchange = (event) => {
-      const file = event.target.files[0];
+    document.getElementById("cameraInput").onchange = (event) => {
+      handleImage(event.target.files[0]);
+    };
+
+    // สำหรับเลือกรูปจากแกลเลอรี่
+    document.getElementById("selectPhoto").onclick = () => {
+      document.getElementById("galleryInput").click();
+    };
+
+    document.getElementById("galleryInput").onchange = (event) => {
+      handleImage(event.target.files[0]);
+    };
+
+    // ฟังก์ชันแสดงรูป
+    function handleImage(file) {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -24,7 +41,7 @@
         };
         reader.readAsDataURL(file);
       }
-    };
+    }
   </script>
 </body>
 </html>
